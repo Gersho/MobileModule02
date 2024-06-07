@@ -17,21 +17,57 @@ class MyApp extends StatelessWidget {
   }
 }
 
-class WeatherApp extends StatelessWidget {
-  const WeatherApp({super.key});
 
+
+
+
+
+
+
+
+
+
+class WeatherApp extends StatefulWidget {
+  const WeatherApp({super.key});
+  @override
+  State<WeatherApp> createState() => WeatherAppState();
+}
+
+class WeatherAppState extends State<WeatherApp> {
   @override
   Widget build(BuildContext context) {
+
+
+  String submitted = "";
+
     return MaterialApp(
       home: DefaultTabController(
         initialIndex: 0,
         length: 3,
         child: Scaffold(
-          appBar: headerBar(),
+          appBar: AppBar(
+
+   
+
+              //  title: const Text("Calculator",maxLines: 1, style: TextStyle(fontSize: 30, )),
+
+              // actions: [],
+
+              ),
+
+          // appBar: HeaderBar(),
+          // appBar: HeaderBar.testtest(),
           bottomNavigationBar: const bottomTabBar(),
-          body: const BottomTabView(),
+          body: const BottomTabView(location: "", isGeo: false),
         ),
       ),
     );
+
+
+
+
   }
 }
+
+
+
