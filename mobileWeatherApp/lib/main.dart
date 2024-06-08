@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:weatherapp_proj/header.dart';
 import 'package:weatherapp_proj/footer.dart';
 
 void main() {
@@ -11,21 +10,11 @@ class MyApp extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return MaterialApp(
+    return const MaterialApp(
       home: WeatherApp(),
     );
   }
 }
-
-
-
-
-
-
-
-
-
-
 
 class WeatherApp extends StatefulWidget {
   const WeatherApp({super.key});
@@ -34,40 +23,50 @@ class WeatherApp extends StatefulWidget {
 }
 
 class WeatherAppState extends State<WeatherApp> {
-  @override
-  Widget build(BuildContext context) {
-
-
+  bool isGeo = false;
   String submitted = "";
 
+  void onSearchSubmit(String val) {
+    if (val.length > 50) {
+      val = val.substring(0, 42) + "...";
+    }
+    setState(() {
+      isGeo = false;
+      submitted = val;
+    });
+  }
+
+  void onClickGeolocation() {
+    setState(() {
+      isGeo = true;
+      submitted = "";
+    });
+  }
+
+  @override
+  Widget build(BuildContext context) {
     return MaterialApp(
       home: DefaultTabController(
         initialIndex: 0,
         length: 3,
         child: Scaffold(
           appBar: AppBar(
-
-   
-
-              //  title: const Text("Calculator",maxLines: 1, style: TextStyle(fontSize: 30, )),
-
-              // actions: [],
-
+              title: SearchBar(
+                onSubmitted: onSearchSubmit,
+                leading: const Icon(Icons.search),
+                hintText: "Search",
               ),
-
-          // appBar: HeaderBar(),
-          // appBar: HeaderBar.testtest(),
-          bottomNavigationBar: const bottomTabBar(),
-          body: const BottomTabView(location: "", isGeo: false),
+              actions: [
+                IconButton(
+                  icon: const Icon(Icons.near_me_rounded),
+                  tooltip: 'Geolocation',
+                  onPressed: onClickGeolocation,
+                ),
+              ]),
+          bottomNavigationBar: const BottomTabBar(),
+          body: BottomTabView(location: submitted, isGeo: isGeo),
         ),
       ),
     );
-
-
-
-
   }
 }
-
-
-

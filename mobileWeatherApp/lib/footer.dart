@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 
-class bottomTabBar extends StatelessWidget {
-  const bottomTabBar({super.key});
+class BottomTabBar extends StatelessWidget {
+  const BottomTabBar({super.key});
 
   @override
   Widget build(BuildContext context) {
@@ -26,9 +26,7 @@ class BottomTabView extends StatelessWidget {
   final String location;
   final bool isGeo;
 
-  const BottomTabView({
-      required this.location,
-      required this.isGeo});
+  const BottomTabView({super.key, required this.location, required this.isGeo});
 
   @override
   Widget build(BuildContext context) {
@@ -38,13 +36,16 @@ class BottomTabView extends StatelessWidget {
     return TabBarView(
       children: [
         TabCenteredChild(children: [
-          Text("Currently", style: TextStyle(fontSize: size.height * 0.04))
+          Text("Currently", style: TextStyle(fontSize: size.height * 0.04)),
+          Text(displayMessage, style: TextStyle(fontSize: size.height * 0.04))
         ]),
         TabCenteredChild(children: [
-          Text("Today", style: TextStyle(fontSize: size.height * 0.04))
+          Text("Today", style: TextStyle(fontSize: size.height * 0.04)),
+          Text(displayMessage, style: TextStyle(fontSize: size.height * 0.04))
         ]),
         TabCenteredChild(children: [
-          Text("Weekly", style: TextStyle(fontSize: size.height * 0.04))
+          Text("Weekly", style: TextStyle(fontSize: size.height * 0.04)),
+          Text(displayMessage, style: TextStyle(fontSize: size.height * 0.04))
         ]),
       ],
     );
