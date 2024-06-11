@@ -32,44 +32,23 @@ class BottomTabView extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     Size size = MediaQuery.of(context).size;
-    // String displayMessage = isGeo ? "Geolocation" : location;
-
 
     String displayMessage = location;
-
-    // if (isGeo)
-    // {
-
-
-
-
-
-    //     // displayMessage = location;
-    // }
-    // else
-    // {
-    //   displayMessage = location;
-    // }
-
-
-
-
-
-
+    Color color = isError ? Colors.red : Colors.black;
 
     return TabBarView(
       children: [
         TabCenteredChild(children: [
           Text("Currently", style: TextStyle(fontSize: size.height * 0.04)),
-          Text(displayMessage, style: TextStyle(fontSize: size.height * 0.04))
+          Text(displayMessage, style: TextStyle(fontSize: size.height * 0.04, color: color))
         ]),
         TabCenteredChild(children: [
           Text("Today", style: TextStyle(fontSize: size.height * 0.04)),
-          Text(displayMessage, style: TextStyle(fontSize: size.height * 0.04))
+          Text(displayMessage, style: TextStyle(fontSize: size.height * 0.04, color: color))
         ]),
         TabCenteredChild(children: [
           Text("Weekly", style: TextStyle(fontSize: size.height * 0.04)),
-          Text(displayMessage, style: TextStyle(fontSize: size.height * 0.04))
+          Text(displayMessage, style: TextStyle(fontSize: size.height * 0.04, color: color))
         ]),
       ],
     );

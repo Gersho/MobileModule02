@@ -1,16 +1,16 @@
-    buildscript {
-        ext.kotlin_version = '1.9.23'
-        repositories {
-            google()
-            jcenter()
-        }
-
-        dependencies {
-            classpath 'com.android.tools.build:gradle:7.3.0'
-            classpath "org.jetbrains.kotlin:kotlin-gradle-plugin:$kotlin_version"
-        }
-
+buildscript {
+    ext.kotlin_version = '1.9.23'
+    repositories {
+        google()
+        jcenter()
     }
+
+    dependencies {
+        classpath 'com.android.tools.build:gradle:7.3.0'
+        classpath "org.jetbrains.kotlin:kotlin-gradle-plugin:$kotlin_version"
+    }
+
+}
 
 
 allprojects {
@@ -32,79 +32,3 @@ tasks.register("clean", Delete) {
     delete rootProject.buildDir
 }
 
-
-// allprojects {
-//     repositories {
-//         google()
-//         mavenCentral()
-//     }
-// }
-
-// rootProject.buildDir = '../build'
-// subprojects {
-//     project.buildDir = "${rootProject.buildDir}/${project.name}"
-// }
-// subprojects {
-//     project.evaluationDependsOn(':app')
-// }
-
-// tasks.register("clean", Delete) {
-//     delete rootProject.buildDir
-// }
-
-
-
-// allprojects {
-//     // ext.kotlin_version = '1.7.1'
-//     repositories {
-//         google()
-//         mavenCentral()
-//     }
-// }
-
-// // ext.kotlin_version = '1.7.1'
-
-// rootProject.buildDir = "../build"
-// subprojects {
-//     project.buildDir = "${rootProject.buildDir}/${project.name}"
-// }
-// subprojects {
-//     project.evaluationDependsOn(":app")
-// }
-
-// tasks.register("clean", Delete) {
-//     delete rootProject.buildDir
-// }
-
-
-// buildscript {
-//     ext.kotlin_version = '1.7.1' // <= expected version is 1.5.1
-// }
-// dependencies {
-//     classpath 'com.android.tools.build:gradle:7.3.1' // downloads 1.7.1 Metadata
-//     // classpath "org.jetbrains.kotlin:kotlin-gradle-plugin:1.7.1"  // <= 1.5.20 used here
-//     classpath "org.jetbrains.kotlin:kotlin-gradle-plugin:$kotlin_version"  // <= 1.5.20 used here
-//     }
-
-
-// buildscript {
-//     ext.kotlin_version = '1.7.1'
-//     repositories {
-//         // jcenter()
-//         // mavenCentral()
-//         google()
-//     }
-//     dependencies {
-//         // classpath 'com.android.tools.build:gradle:7.6.3'
-//     classpath 'com.android.tools.build:gradle:7.3.1' // downloads 1.7.1 Metadata
-//     classpath "org.jetbrains.kotlin:kotlin-gradle-plugin:1.7.1"  // <= 1.5.20 used here
-//     // classpath "org.jetbrains.kotlin:kotlin-gradle-plugin:$kotlin_version"  // <= 1.5.20 used here
-//     //     implementation 'com.google.android.gms:play-services-location:18.0.0'
-//     // implementation 'androidx.core:core-ktx:1.7.0'
-//     }
-// }
-
-// dependencies {
-//     implementation 'com.google.android.gms:play-services-location:18.0.0'
-//     implementation 'androidx.core:core-ktx:1.7.0'
-// }
