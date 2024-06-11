@@ -1,58 +1,195 @@
+
 plugins {
     id "com.android.application"
     id "kotlin-android"
-    // The Flutter Gradle Plugin must be applied after the Android and Kotlin Gradle plugins.
     id "dev.flutter.flutter-gradle-plugin"
 }
 
 def localProperties = new Properties()
-def localPropertiesFile = rootProject.file("local.properties")
+def localPropertiesFile = rootProject.file('local.properties')
 if (localPropertiesFile.exists()) {
-    localPropertiesFile.withReader("UTF-8") { reader ->
+    localPropertiesFile.withReader('UTF-8') { reader ->
         localProperties.load(reader)
     }
 }
 
-def flutterVersionCode = localProperties.getProperty("flutter.versionCode")
+def flutterVersionCode = localProperties.getProperty('flutter.versionCode')
 if (flutterVersionCode == null) {
-    flutterVersionCode = "1"
+    flutterVersionCode = '1'
 }
 
-def flutterVersionName = localProperties.getProperty("flutter.versionName")
+def flutterVersionName = localProperties.getProperty('flutter.versionName')
 if (flutterVersionName == null) {
-    flutterVersionName = "1.0"
+    flutterVersionName = '1.0'
 }
 
 android {
-    namespace = "com.example.weatherapp_proj"
-    compileSdk = flutter.compileSdkVersion
-    ndkVersion = flutter.ndkVersion
+    namespace "com.example.weatherapp_proj"
+    compileSdk flutter.compileSdkVersion
+    ndkVersion flutter.ndkVersion
 
     compileOptions {
-        sourceCompatibility = JavaVersion.VERSION_1_8
-        targetCompatibility = JavaVersion.VERSION_1_8
+        sourceCompatibility JavaVersion.VERSION_1_8
+        targetCompatibility JavaVersion.VERSION_1_8
+    }
+
+    kotlinOptions {
+        jvmTarget = '1.8'
+    }
+
+    sourceSets {
+        main.java.srcDirs += 'src/main/kotlin'
     }
 
     defaultConfig {
         // TODO: Specify your own unique Application ID (https://developer.android.com/studio/build/application-id.html).
-        applicationId = "com.example.weatherapp_proj"
+        applicationId "com.example.weatherapp_proj"
         // You can update the following values to match your application needs.
         // For more information, see: https://docs.flutter.dev/deployment/android#reviewing-the-gradle-build-configuration.
-        minSdk = flutter.minSdkVersion
-        targetSdk = flutter.targetSdkVersion
-        versionCode = flutterVersionCode.toInteger()
-        versionName = flutterVersionName
+        minSdkVersion flutter.minSdkVersion
+        targetSdkVersion flutter.targetSdkVersion
+        versionCode flutterVersionCode.toInteger()
+        versionName flutterVersionName
     }
 
     buildTypes {
         release {
             // TODO: Add your own signing config for the release build.
             // Signing with the debug keys for now, so `flutter run --release` works.
-            signingConfig = signingConfigs.debug
+            signingConfig signingConfigs.debug
         }
     }
 }
 
 flutter {
-    source = "../.."
+    source '../..'
 }
+
+dependencies {}
+
+
+
+
+
+// buildscript {
+//     ext.kotlin_version = '1.7.1'
+//     repositories {
+//         // jcenter()
+//         // mavenCentral()
+//         google()
+//     }
+//     dependencies {
+//         // classpath 'com.android.tools.build:gradle:7.6.3'
+//     classpath 'com.android.tools.build:gradle:7.3.1' // downloads 1.7.1 Metadata
+//     classpath "org.jetbrains.kotlin:kotlin-gradle-plugin:1.7.1"  // <= 1.5.20 used here
+//     //     implementation 'com.google.android.gms:play-services-location:18.0.0'
+//     // implementation 'androidx.core:core-ktx:1.7.0'
+//     // compile 'androidx.core:core-ktx:1.7.0'
+//     // classpath "org.jetbrains.kotlin:kotlin-gradle-plugin:$kotlin_version"  // <= 1.5.20 used here
+//     }
+// }
+
+
+
+// plugins {
+//     id "com.android.application"
+//     id "kotlin-android"
+//     // The Flutter Gradle Plugin must be applied after the Android and Kotlin Gradle plugins.
+//     id "dev.flutter.flutter-gradle-plugin"
+//     // id "com.android
+//   meta 1.12.0 (1.15.0 available).tools.build"
+//     // id "org.jetbrains.kotlin"
+// }
+
+
+// buildscript {
+//     ext.kotlin_version = '1.7.1'
+//     repositories {
+//         jcenter()
+//     }
+    // dependencies {
+    //     ext.kotlin_version = '1.7.1'
+    // // classpath 'com.android.tools.build:gradle:7.3.1' // downloads 1.7.1 Metadata
+    // classpath 'com.android.tools.build:gradle:8.8'
+    // classpath "org.jetbrains.kotlin:kotlin-gradle-plugin:1.7.1"  // <= 1.5.20 used here
+    // // classpath "org.jetbrains.kotlin:kotlin-gradle-plugin:$kotlin_version"  // <= 1.5.20 used here
+    //     implementation 'com.google.android.gms:play-services-location:18.0.0'
+    // implementation 'androidx.core:core-ktx:1.7.0'
+    // }
+// }
+
+
+
+
+
+
+
+
+// dependencies {
+//     implementation 'com.google.android.gms:play-services-location:18.0.0'
+//     implementation 'androidx.core:core-ktx:1.7.0'
+// }
+
+// apply plugin: 'com.android.tools.build'
+
+// def localProperties = new Properties()
+// def localPropertiesFile = rootProject.file("local.properties")
+// if (localPropertiesFile.exists()) {
+//     localPropertiesFile.withReader("UTF-8") { reader ->
+//         localProperties.load(reader)
+//     }
+// }
+
+// def flutterVersionCode = localProperties.getProperty("flutter.versionCode")
+// if (flutterVersionCode == null) {
+//     flutterVersionCode = "1"
+// }
+
+// def flutterVersionName = localProperties.getProperty("flutter.versionName")
+// if (flutterVersionName == null) {
+//     flutterVersionName = "1.0"
+// }
+
+// android {
+//     namespace = "com.example.weatherapp_proj"
+//     compileSdk = flutter.compileSdkVersion
+//     ndkVersion = flutter.ndkVersion
+//     // dependencies {
+//     //     implementation 'com.google.android.gms:play-services-location:18.0.0'
+//     //     implementation 'androidx.core:core-ktx:1.7.0'
+//     // }
+
+//     compileOptions {
+//         sourceCompatibility = JavaVersion.VERSION_1_8
+//         targetCompatibility = JavaVersion.VERSION_1_8
+//     }
+
+//     defaultConfig {
+//         // TODO: Specify your own unique Application ID (https://developer.android.com/studio/build/application-id.html).
+//         applicationId = "com.example.weatherapp_proj"
+//         // You can update the following values to match your application needs.
+//         // For more information, see: https://docs.flutter.dev/deployment/android#reviewing-the-gradle-build-configuration.
+//         minSdk = flutter.minSdkVersion
+//         targetSdk = flutter.targetSdkVersion
+//         versionCode = flutterVersionCode.toInteger()
+//         versionName = flutterVersionName
+//     }
+
+//     buildTypes {
+//         release {
+//             // TODO: Add your own signing config for the release build.
+//             // Signing with the debug keys for now, so `flutter run --release` works.
+//             signingConfig = signingConfigs.debug
+//         }
+//     }
+// }
+
+// flutter {
+//     source = "../.."
+// }
+
+// dependencies {}
+//     // dependencies {
+//     //     implementation 'com.google.android.gms:play-services-location:18.0.0'
+//     //     implementation 'androidx.core:core-ktx:1.7.0'
+//     // }

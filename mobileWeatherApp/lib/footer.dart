@@ -25,13 +25,37 @@ class BottomTabBar extends StatelessWidget {
 class BottomTabView extends StatelessWidget {
   final String location;
   final bool isGeo;
+  final bool isError;
 
-  const BottomTabView({super.key, required this.location, required this.isGeo});
+  const BottomTabView({super.key, required this.location, required this.isGeo, required this.isError});
 
   @override
   Widget build(BuildContext context) {
     Size size = MediaQuery.of(context).size;
-    String displayMessage = isGeo ? "Geolocation" : location;
+    // String displayMessage = isGeo ? "Geolocation" : location;
+
+
+    String displayMessage = location;
+
+    // if (isGeo)
+    // {
+
+
+
+
+
+    //     // displayMessage = location;
+    // }
+    // else
+    // {
+    //   displayMessage = location;
+    // }
+
+
+
+
+
+
 
     return TabBarView(
       children: [
@@ -49,6 +73,11 @@ class BottomTabView extends StatelessWidget {
         ]),
       ],
     );
+
+
+
+
+
   }
 }
 
