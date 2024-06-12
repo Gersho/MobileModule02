@@ -1,7 +1,11 @@
+import 'dart:io';
+
 import 'package:flutter/material.dart';
 import 'package:weatherapp_proj/footer.dart';
-
+import 'package:weatherapp_proj/searchbar.dart';
+import 'package:http/http.dart' as http;
 import 'package:geolocator/geolocator.dart';
+import 'dart:convert';
 
 void main() {
   runApp(const MyApp());
@@ -40,7 +44,6 @@ class WeatherAppState extends State<WeatherApp> {
     });
   }
 
-//Exemple from doc START
   Future<Position> _determinePosition() async {
     bool serviceEnabled;
     LocationPermission permission;
@@ -64,7 +67,65 @@ class WeatherAppState extends State<WeatherApp> {
     }
     return await Geolocator.getCurrentPosition();
   }
-//Exemple from doc END
+
+
+  Future<List<Destination>> _callGeoCodingApi(String url) async {
+    try {
+      final response = await http.get(Uri.parse(url));
+      if (response.statusCode == 200) {
+        debugPrint("@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@");
+        debugPrint(response.body);
+        // List<Destination> list = parseAgents(response.body);
+        List<Destination> list = parseAgents(response.body);
+        debugPrint("*********************************");
+        return list;
+      } else {
+        throw Exception('Error');
+      }
+    } catch (e) {
+      throw Exception(e.toString());
+    }
+  }
+
+
+
+  static List<Destination> parseAgents(String responseBody) {
+    final parsed = json.decode(responseBody).cast<Map<String, dynamic>>();
+    return parsed.map<Destination>((json) => Destination.fromJson(json)).toList();
+  }
+
+
+
+  // static List<Destination> parseAgents(String responseBody) {
+  //   final parsed = json.decode(responseBody).cast<Map<String, dynamic>>();
+  //   return parsed.map<Destination>((json) => Destination.fromJson(json)).toList();
+  // }
+
+
+  void onSearchChange(String val)
+  {
+      String apiUrl = "https://geocoding-api.open-meteo.com/v1/search?count=5&name=$val";
+      if(val.length < 3)
+      {
+        debugPrint("val < 3 -> no api call");
+        return;
+      }
+
+      Future<List<Destination>> future = _callGeoCodingApi(apiUrl);
+      future.then((value){
+
+        debugPrint("####################################");
+        debugPrint(value.toString());
+
+
+          setState(() { });
+
+      });
+      // List
+
+
+  }
+
 
   void onClickGeolocation() {
   Future<Position> future = _determinePosition();
@@ -72,6 +133,7 @@ class WeatherAppState extends State<WeatherApp> {
     setState(() {
         isError = false;
         isGeo = true;
+        //here logic [coords] -> [place name] -> [weather]
         submitted = value.toString();
     });
   })
@@ -82,29 +144,6 @@ class WeatherAppState extends State<WeatherApp> {
         submitted = error;
     });
       });
-
-
-// Future.delayed(
-//   const Duration(seconds: 1),
-//   () => throw 401,
-// ).then((value) {
-//   throw 'Unreachable';
-// }).catchError((err) {
-//   print('Error: $err'); // Prints 401.
-// }, test: (error) {
-//   return error is int && error >= 400;
-// });
-
-// Future<int> future = getFuture();
-
-
-
-  // submitted = snapshot.onError
-
-    // setState(() {
-    //   isGeo = true;
-    //   submitted = "";
-    // });
   }
 
   @override
@@ -114,9 +153,12 @@ class WeatherAppState extends State<WeatherApp> {
         initialIndex: 0,
         length: 3,
         child: Scaffold(
+
+            // appBar: TopBar(),
           appBar: AppBar(
               title: SearchBar(
-                onSubmitted: onSearchSubmit,
+                onChanged: onSearchChange,
+                // onSubmitted: onSearchSubmit,
                 leading: const Icon(Icons.search),
                 hintText: "Search",
               ),
@@ -127,10 +169,25 @@ class WeatherAppState extends State<WeatherApp> {
                   onPressed: onClickGeolocation,
                 ),
               ]),
+
+
           bottomNavigationBar: const BottomTabBar(),
+          // body: BottomTabView(location: submitted, isGeo: isGeo, isError: isError,),
           body: BottomTabView(location: submitted, isGeo: isGeo, isError: isError,),
         ),
       ),
     );
   }
 }
+
+
+
+
+// /flutter ( 7452): Receiver: _Map len:2
+// E/flutter ( 7452): Tried calling: cast<Map<String, dynamic>>()
+// E/flutter ( 7452): Found: cast<Y0, Y1>() => Map<Y0, Y1>
+// E/flutter ( 7452): #0      WeatherAppState._callGeoCodingApi (package:weatherapp_proj/main.dart:82:7)
+// E/flutter ( 7452): <asynchronous suspension>
+// E/flutter ( 7452): #1      WeatherAppState.onSearchChange.<anonymous closure> (package:weatherapp_proj/main.dart:105:19)
+// E/flutter ( 7452): <asynchronous suspension>
+// E/flutter ( 7452): 
