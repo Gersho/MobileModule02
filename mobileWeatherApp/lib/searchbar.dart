@@ -1,10 +1,15 @@
+import 'dart:ffi';
+
 import 'package:flutter/material.dart';
 
 
 
 class Result
 {
-  List<Destination> destinations;
+  final List<Destination> destinations;
+  // String destinations;
+  // Map<String, dynamic> destinations;
+  // objList: (json['objList'] as List).map((i) => MyObj.fromJson(i)).toList()
 
   Result({
     required this.destinations
@@ -12,9 +17,16 @@ class Result
 
   factory Result.fromJson(Map<String, dynamic> json) {
     return Result(
-      destinations: json['results']
+      // destinations: json['results']
+      destinations: (json['results'] as List).map((i) => Destination.fromJson(i)).toList()
     );
   }
+
+
+  @override
+  String toString() => "Destinations: [$destinations]";
+
+  // List<Destination>
 
 }
 
@@ -24,8 +36,8 @@ class Destination
   String city;
   String country;
   String admin1;
-  String latitude;
-  String longitude;
+  double latitude;
+  double longitude;
 
   Destination({
       required this.city,
@@ -43,5 +55,8 @@ class Destination
     latitude: json['latitude'],
     longitude: json['longitude']
   );
-}
+  }
+
+  @override
+  String toString() => "<Destination city: $city, country: $country, admin1: $admin1, latitude: $latitude, longitude: $longitude>";
 }

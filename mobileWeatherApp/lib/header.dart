@@ -209,3 +209,37 @@
 
 //   );
 // }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+// E/flutter ( 4619): [ERROR:flutter/runtime/dart_vm_initializer.cc(41)] Unhandled Exception: Exception: type '_Map<String, dynamic>' is not a subtype of type 'Result'
+// E/flutter ( 4619): #0      WeatherAppState._callGeoCodingApi (package:weatherapp_proj/main.dart:88:7)
+// E/flutter ( 4619): <asynchronous suspension>
+// E/flutter ( 4619): #1      WeatherAppState.onSearchChange.<anonymous closure> (package:weatherapp_proj/main.dart:136:19)
+// E/flutter ( 4619): <asynchronous suspension>
+// E/flutter ( 4619): 
+// I/flutter ( 4619): @@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
+// E/flutter ( 4619): [ERROR:flutter/runtime/dart_vm_initializer.cc(41)] Unhandled Exception: Exception: type '_Map<String, dynamic>' is not a subtype of type 'Result'
+// E/flutter ( 4619): #0      WeatherAppState._callGeoCodingApi (package:weatherapp_proj/main.dart:88:7)
+// E/flutter ( 4619): <asynchronous suspension>
+// E/flutter ( 4619): #1      WeatherAppState.onSearchChange.<anonymous closure> (package:weatherapp_proj/main.dart:136:19)
+// E/flutter ( 4619): <asynchronous suspension>
+// E/flutter ( 4619): 
+// D/EGL_emulation( 4619): app_time_stats: avg=343.02ms min=120.39ms max=491.09ms count=3
+// D/EGL_emulation( 4619): app_time_stats: avg=499.31ms min=499.07ms max=499.52ms count=3
+// Application finished.
