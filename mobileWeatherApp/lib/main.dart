@@ -2,7 +2,7 @@ import 'dart:io';
 
 import 'package:flutter/material.dart';
 import 'package:weatherapp_proj/footer.dart';
-import 'package:weatherapp_proj/searchbar.dart';
+import 'package:weatherapp_proj/json.dart';
 import 'package:http/http.dart' as http;
 import 'package:geolocator/geolocator.dart';
 import 'dart:convert';
@@ -68,18 +68,11 @@ class WeatherAppState extends State<WeatherApp> {
     return await Geolocator.getCurrentPosition();
   }
 
-
   Future<List<Destination>> _callGeoCodingApi(String url) async {
     try {
       final response = await http.get(Uri.parse(url));
       if (response.statusCode == 200) {
-        debugPrint("@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@");
-        // debugPrint(response.body);
-        // List<Destination> list = parseAgents(response.body);
-        // List<Destination> list = parseAgents(response.body);
-        testJSON(response.body);
-        List<Destination> list = [];
-        debugPrint("*********************************");
+        List<Destination> list = parseAgents(response.body);
         return list;
       } else {
         throw Exception('Error');
@@ -89,47 +82,16 @@ class WeatherAppState extends State<WeatherApp> {
     }
   }
 
-
-  static void testJSON(String responseBody)
-  {
-    final a = json.decode(responseBody);
-    // final c = json.decode(b);
-    // final List<Destination> c = Destination.fromJson(b);
-    // return test.map<Destination>((json) => Destination.fromJson(json)).toList()
-    debugPrint("????????? START ?????????");
-    final Result b = Result.fromJson(a);
-    // debugPrint(parsed.toString());
-    // final a = json.decode(parsed.destinations);
-    // final List<dynamic> a = json.decode(parsed.destinations);
-    debugPrint("????????? MID ?????????");
-    final List<Destination> c = b.destinations;
-    c.forEach((element) {
-      debugPrint(element.toString());
-    },);
-    debugPrint("?????????? END ????????????");
-//  forEach(void action(E element)) → void 
-
-
+  static List<Destination> parseAgents(String responseBody) {
+      final deserialized = json.decode(responseBody);
+      if (deserialized['results'] == null)
+      {
+        return [];
+      }
+      final Result result = Result.fromJson(deserialized);
+      final List<Destination> destinations = result.destinations;
+      return destinations;
   }
-
-
-  // static List<Destination> parseAgents(String responseBody) {
-  //   final Result parsed = json.decode(responseBody);
-  //   final List<Destination> test = parsed.decode(responseBody);
-  //   // final parsed = json.decode(responseBody).cast<Map<String, dynamic>>();
-  //   // final test = parsed.map<Result>((json) => Result.fromJson(json));
-  //   // debugPrint(parsed.toString());
-  //   return parsed.destinations;
-  //   // return test.map<Destination>((json) => Destination.fromJson(json)).toList();
-  // }
-
-
-
-  // static List<Destination> parseAgents(String responseBody) {
-  //   final parsed = json.decode(responseBody).cast<Map<String, dynamic>>();
-  //   return parsed.map<Destination>((json) => Destination.fromJson(json)).toList();
-  // }
-
 
   void onSearchChange(String val)
   {
@@ -144,15 +106,14 @@ class WeatherAppState extends State<WeatherApp> {
       future.then((value){
 
         debugPrint("####################################");
+
+        //TODO HERE
         debugPrint(value.toString());
 
 
           setState(() { });
 
       });
-      // List
-
-
   }
 
 
@@ -209,25 +170,3 @@ class WeatherAppState extends State<WeatherApp> {
   }
 }
 
-
-
-
-// /flutter ( 7452): Receiver: _Map len:2
-// E/flutter ( 7452): Tried calling: cast<Map<String, dynamic>>()
-// E/flutter ( 7452): Found: cast<Y0, Y1>() => Map<Y0, Y1>
-// E/flutter ( 7452): #0      WeatherAppState._callGeoCodingApi (package:weatherapp_proj/main.dart:82:7)
-// E/flutter ( 7452): <asynchronous suspension>
-// E/flutter ( 7452): #1      WeatherAppState.onSearchChange.<anonymous closure> (package:weatherapp_proj/main.dart:105:19)
-// E/flutter ( 7452): <asynchronous suspension>
-// E/flutter ( 7452): 
-
-
-
-// E/flutter ( 4965): [ERROR:flutter/runtime/dart_vm_initializer.cc(41)] Unhandled Exception: Exception: NoSuchMethodError: Class '_Map<String, dynamic>' has no instance method 'cast' with matching arguments.
-// E/flutter ( 4965): Receiver: _Map len:2
-// E/flutter ( 4965): Tried calling: cast<Map<String, dynamic>>()
-// E/flutter ( 4965): Found: cast<Y0, Y1>() => Map<Y0, Y1>
-// E/flutter ( 4965): #0      WeatherAppState._callGeoCodingApi (package:weatherapp_proj/main.dart:86:7)
-// E/flutter ( 4965): <asynchronous suspension>
-// E/flutter ( 4965): #1      WeatherAppState.onSearchChange.<anonymous closure> (package:weatherapp_proj/main.dart:116:19)
-// E/flutter ( 4965): <asynchronous suspension>

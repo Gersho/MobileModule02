@@ -1,15 +1,6 @@
-import 'dart:ffi';
-
-import 'package:flutter/material.dart';
-
-
-
 class Result
 {
   final List<Destination> destinations;
-  // String destinations;
-  // Map<String, dynamic> destinations;
-  // objList: (json['objList'] as List).map((i) => MyObj.fromJson(i)).toList()
 
   Result({
     required this.destinations
@@ -17,19 +8,13 @@ class Result
 
   factory Result.fromJson(Map<String, dynamic> json) {
     return Result(
-      // destinations: json['results']
       destinations: (json['results'] as List).map((i) => Destination.fromJson(i)).toList()
     );
   }
 
-
   @override
   String toString() => "Destinations: [$destinations]";
-
-  // List<Destination>
-
 }
-
 
 class Destination
 {
@@ -48,15 +33,21 @@ class Destination
   });
 
   factory Destination.fromJson(Map<String, dynamic> json) {
-  return Destination(
-    city: json['name'],
-    country: json['country'],
-    admin1: json['admin1'],
-    latitude: json['latitude'],
-    longitude: json['longitude']
-  );
+    return Destination(
+      // city: json['name'] != null ? json['name'] : "",
+      // country: json['country'] ? json['country'] : "",
+      // admin1: json['admin1'] ? json['admin1'] : "",
+      // latitude: json['latitude'] ? json['latitude'] : 0,
+      // longitude: json['longitude'] ? json['longitude'] : 0
+
+      city: json['name'] ?? "",
+      country: json['country'] ?? "",
+      admin1: json['admin1'] ?? "",
+      latitude: json['latitude'] ?? 0,
+      longitude: json['longitude'] ?? 0
+    );
   }
 
   @override
-  String toString() => "<Destination city: $city, country: $country, admin1: $admin1, latitude: $latitude, longitude: $longitude>";
+  String toString() => "<city: $city, country: $country, admin1: $admin1, latitude: $latitude, longitude: $longitude>";
 }

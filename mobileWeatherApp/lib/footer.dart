@@ -52,11 +52,6 @@ class BottomTabView extends StatelessWidget {
         ]),
       ],
     );
-
-
-
-
-
   }
 }
 
