@@ -1,4 +1,3 @@
-import 'dart:io';
 
 import 'package:flutter/material.dart';
 import 'package:weatherapp_proj/footer.dart';
@@ -31,6 +30,8 @@ class WeatherApp extends StatefulWidget {
 class WeatherAppState extends State<WeatherApp> {
   bool isGeo = false;
   bool isError = false;
+  bool isSearching = false;
+  List<Destination> destinations = [];
   String submitted = "";
 
   void onSearchSubmit(String val) {
@@ -96,22 +97,34 @@ class WeatherAppState extends State<WeatherApp> {
   void onSearchChange(String val)
   {
       String apiUrl = "https://geocoding-api.open-meteo.com/v1/search?count=5&name=$val";
+      
+      isSearching = false;
       if(val.length < 3)
       {
+        setState(() {
+          
+        isSearching = false;
+        });
+
         debugPrint("val < 3 -> no api call");
+
         return;
       }
-
+      
       Future<List<Destination>> future = _callGeoCodingApi(apiUrl);
       future.then((value){
 
         debugPrint("####################################");
-
-        //TODO HERE
         debugPrint(value.toString());
 
+        //TODO HERE
 
-          setState(() { });
+
+          setState(() {
+            isSearching = true;
+            destinations = value;
+            // searching = true;
+           });
 
       });
   }
