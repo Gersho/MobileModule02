@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:weatherapp_proj/footer.dart';
-import 'package:weatherapp_proj/json.dart';
+import 'package:weatherapp_proj/geocoding.dart';
 import 'package:weatherapp_proj/weather.dart';
 import 'package:http/http.dart' as http;
 import 'package:geolocator/geolocator.dart';
@@ -32,22 +32,22 @@ class WeatherAppState extends State<WeatherApp> {
   bool isError = false;
   bool isSearching = false;
   List<Destination> destinations = [];
-  // String submitted = "";
   Destination submitted = Destination.empty();
   FullWeatherData weatherData = FullWeatherData.empty();
   bool showResult = false;
 
   // void onSearchSubmit(String val) {
-  //   if (val.length > 45) {
-  //     val = "${val.substring(0, 42)}...";
-  //   }
+    
   //   setState(() {
   //     isGeo = false;
   //     isError = false;
-  //     submitted = val;
+  //     submitted = destinations[0];
   //     showResult = false;
   //   });
   // }
+
+
+  
 
   Future<Position> _determinePosition() async {
     bool serviceEnabled;
@@ -99,15 +99,7 @@ class WeatherAppState extends State<WeatherApp> {
 
   static FullWeatherData parseWeather(String responseBody) {
     final deserialized = json.decode(responseBody);
-    // if (deserialized['results'] == null)
-    // {
-    //   return [];
-    // }
-    // final Result result = Result.fromJson(deserialized);
-    // final FullWeatherData destinations = result.destinations;
-
     final FullWeatherData data = FullWeatherData.fromJson(deserialized);
-
     return data;
   }
 
@@ -125,19 +117,21 @@ class WeatherAppState extends State<WeatherApp> {
     }
   }
 
+
+  void onSearchChoice()
+  {
+
+  }
+
+
   void onSearchChange(String val) {
     String apiUrl =
         "https://geocoding-api.open-meteo.com/v1/search?count=5&name=$val";
-
-    // isSearching = false;
     isSearching = true;
     if (val.length < 3) {
       setState(() {
         isSearching = false;
       });
-
-      // debugPrint("val < 3 -> no api call");
-
       return;
     }
 
@@ -161,7 +155,7 @@ class WeatherAppState extends State<WeatherApp> {
     try {
       final response = await http.get(Uri.parse(url));
       if (response.statusCode == 200) {
-        AdressLookup data = parseReverseGeoCoding(response.body);
+        AdressLookup data = AdressLookup.parseReverseGeoCoding(response.body);
         return data;
       } else {
         throw Exception('Error');
@@ -171,19 +165,6 @@ class WeatherAppState extends State<WeatherApp> {
     }
   }
 
-  static AdressLookup parseReverseGeoCoding(String responseBody) {
-    final deserialized = json.decode(responseBody);
-    // if (deserialized['results'] == null)
-    // {
-    //   return [];
-    // }
-    // final Result result = Result.fromJson(deserialized);
-    // final AdressLookup destinations = result.destinations;
-
-    final AdressLookup data = AdressLookup.fromJson(deserialized);
-
-    return data;
-  }
 
   void onClickGeolocation() {
     Future<Position> geoLocalisationFuture = _determinePosition();

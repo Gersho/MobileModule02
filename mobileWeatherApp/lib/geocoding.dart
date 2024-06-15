@@ -1,4 +1,5 @@
-import 'package:flutter/material.dart';
+import 'package:http/http.dart' as http;
+import 'dart:convert';
 
 class AdressLookup {
   final Destination destination;
@@ -9,6 +10,17 @@ class AdressLookup {
     return AdressLookup(
         destination: Destination.fromReverseGeoCodingJson(json['address']));
   }
+
+    static AdressLookup parseReverseGeoCoding(String responseBody) {
+    final deserialized = json.decode(responseBody);
+    final AdressLookup data = AdressLookup.fromJson(deserialized);
+    return data;
+  }
+
+
+
+
+  
 }
 
 class Result {

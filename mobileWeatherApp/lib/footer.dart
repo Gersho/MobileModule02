@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:weatherapp_proj/json.dart';
+import 'package:weatherapp_proj/geocoding.dart';
 import 'package:weatherapp_proj/weather.dart';
 
 class BottomTabBar extends StatelessWidget {
@@ -155,7 +155,7 @@ class BottomTabView extends StatelessWidget {
                 height: size.height * 0.10,
                 color: Colors.amber,
                 child: SearchResultItem(children: [
-                  Text('${destinations[index].city}',
+                  Text(destinations[index].city,
                       style: TextStyle(fontSize: size.height * 0.03)),
                   Text(
                       '${destinations[index].admin1}, ${destinations[index].country}',

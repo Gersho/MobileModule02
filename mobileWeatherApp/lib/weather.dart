@@ -1,8 +1,3 @@
-
-import 'package:http/http.dart' as http;
-import 'package:flutter/material.dart';
-
-
 // Code 	Description
 // 0 	Clear sky
 // 1, 2, 3 	Mainly clear, partly cloudy, and overcast
@@ -100,7 +95,6 @@ String getWeatherInfoFromWeatherCode(String weatherCode){
 
 class FullWeatherData
 {
-  //daily, hourly, current are direct childs of main object.
   DailyWeather daily;
   HourlyWeather hourly;
   CurrentWeather current;
@@ -227,12 +221,3 @@ class CurrentWeather
   @override
   String toString() => "<Current temp: $temperature, weathercode: $weathercode, windspeed: $windspeed>";
 }
-
-
-
-
-
-
-
-
-// https://api.open-meteo.com/v1/forecast?latitude=52.52&longitude=13.41&current=temperature_2m,weather_code,wind_speed_10m&hourly=temperature_2m,weather_code,wind_speed_10m&daily=weather_code,temperature_2m_max,temperature_2m_min&timezone=auto
