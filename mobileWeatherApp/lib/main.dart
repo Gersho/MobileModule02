@@ -2,9 +2,10 @@ import 'package:flutter/material.dart';
 import 'package:weatherapp_proj/footer.dart';
 import 'package:weatherapp_proj/geocoding.dart';
 import 'package:weatherapp_proj/weather.dart';
-import 'package:http/http.dart' as http;
+// import 'package:http/http.dart' as http;
 import 'package:geolocator/geolocator.dart';
-import 'dart:convert';
+// import 'dart:convert';
+import 'package:weatherapp_proj/apicalls.dart';
 
 void main() {
   runApp(const MyApp());
@@ -73,55 +74,10 @@ class WeatherAppState extends State<WeatherApp> {
     return await Geolocator.getCurrentPosition();
   }
 
-  Future<List<Destination>> _callGeoCodingApi(String url) async {
-    try {
-      final response = await http.get(Uri.parse(url));
-      if (response.statusCode == 200) {
-        List<Destination> list = parseAgents(response.body);
-        return list;
-      } else {
-        throw Exception('Error');
-      }
-    } catch (e) {
-      throw Exception(e.toString());
-    }
-  }
+  // void onSearchChoice()
+  // {
 
-  static List<Destination> parseAgents(String responseBody) {
-    final deserialized = json.decode(responseBody);
-    if (deserialized['results'] == null) {
-      return [];
-    }
-    final Result result = Result.fromJson(deserialized);
-    final List<Destination> destinations = result.destinations;
-    return destinations;
-  }
-
-  static FullWeatherData parseWeather(String responseBody) {
-    final deserialized = json.decode(responseBody);
-    final FullWeatherData data = FullWeatherData.fromJson(deserialized);
-    return data;
-  }
-
-  Future<FullWeatherData> _callWeatherApi(String url) async {
-    try {
-      final response = await http.get(Uri.parse(url));
-      if (response.statusCode == 200) {
-        FullWeatherData data = parseWeather(response.body);
-        return data;
-      } else {
-        throw Exception('Error');
-      }
-    } catch (e) {
-      throw Exception(e.toString());
-    }
-  }
-
-
-  void onSearchChoice()
-  {
-
-  }
+  // }
 
 
   void onSearchChange(String val) {
@@ -135,7 +91,8 @@ class WeatherAppState extends State<WeatherApp> {
       return;
     }
 
-    Future<List<Destination>> future = _callGeoCodingApi(apiUrl);
+    // Future<List<Destination>> future = callGeoCodingApi(apiUrl);
+    Future<List<Destination>> future = callGeoCodingApi(apiUrl);
     future.then((value) {
       debugPrint("####################################");
       debugPrint(value.toString());
@@ -151,33 +108,19 @@ class WeatherAppState extends State<WeatherApp> {
     });
   }
 
-  Future<AdressLookup> _callReverseGeoCodingApi(String url) async {
-    try {
-      final response = await http.get(Uri.parse(url));
-      if (response.statusCode == 200) {
-        AdressLookup data = AdressLookup.parseReverseGeoCoding(response.body);
-        return data;
-      } else {
-        throw Exception('Error');
-      }
-    } catch (e) {
-      throw Exception(e.toString());
-    }
-  }
-
 
   void onClickGeolocation() {
     Future<Position> geoLocalisationFuture = _determinePosition();
     geoLocalisationFuture.then((geoLocNumericResponse) {
       String weatherApiUrl =
           "https://api.open-meteo.com/v1/forecast?latitude=${geoLocNumericResponse.latitude}&longitude=${geoLocNumericResponse.longitude}&current=temperature_2m,weather_code,wind_speed_10m&hourly=temperature_2m,weather_code,wind_speed_10m&daily=weather_code,temperature_2m_max,temperature_2m_min&timezone=auto";
-      Future<FullWeatherData> weatherDataFuture = _callWeatherApi(weatherApiUrl);
+      Future<FullWeatherData> weatherDataFuture = callWeatherApi(weatherApiUrl);
 
       weatherDataFuture.then((weatherDataResponse) {
         String reverseGeoCodingApiUrl =
             "https://nominatim.openstreetmap.org/reverse?lat=${geoLocNumericResponse.latitude}&lon=${geoLocNumericResponse.longitude}&format=json";
         Future<AdressLookup> geoLocNameFuture =
-            _callReverseGeoCodingApi(reverseGeoCodingApiUrl);
+            callReverseGeoCodingApi(reverseGeoCodingApiUrl);
 
         geoLocNameFuture.then((geoLocNameResponse) {
           setState(() {

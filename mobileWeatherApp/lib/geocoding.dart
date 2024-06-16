@@ -11,16 +11,11 @@ class AdressLookup {
         destination: Destination.fromReverseGeoCodingJson(json['address']));
   }
 
-    static AdressLookup parseReverseGeoCoding(String responseBody) {
+  static AdressLookup parseReverseGeoCoding(String responseBody) {
     final deserialized = json.decode(responseBody);
     final AdressLookup data = AdressLookup.fromJson(deserialized);
     return data;
   }
-
-
-
-
-  
 }
 
 class Result {
