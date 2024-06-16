@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:weatherapp_proj/geocoding.dart';
 import 'package:weatherapp_proj/weather.dart';
+import 'package:weatherapp_proj/main.dart';
+import 'package:provider/provider.dart';
 
 class BottomTabBar extends StatelessWidget {
   const BottomTabBar({super.key});
@@ -151,18 +153,52 @@ class BottomTabView extends StatelessWidget {
             padding: const EdgeInsets.all(15),
             itemCount: destinations.length,
             itemBuilder: (BuildContext context, int index) {
-              return Container(
-                height: size.height * 0.10,
-                color: Colors.amber,
-                child: SearchResultItem(children: [
-                  Text(destinations[index].city,
-                      style: TextStyle(fontSize: size.height * 0.03)),
-                  Text(
-                      '${destinations[index].admin1}, ${destinations[index].country}',
-                      style:
-                          TextStyle(fontSize: size.height * 0.02, color: color))
-                ]),
+
+
+            return GestureDetector(
+                onTap: (){
+
+
+                context.read<Counter>().getClick(destinations[index]);
+                },
+                  
+                child: Container(
+                    height: size.height * 0.10,
+                    color: Colors.amber,
+                    child: SearchResultItem(children: [
+                      Text(destinations[index].city,
+                          style: TextStyle(fontSize: size.height * 0.03)),
+                      Text(
+                          '${destinations[index].admin1}, ${destinations[index].country}',
+                          style:
+                              TextStyle(fontSize: size.height * 0.02, color: color))
+                    ]),
+                  ),
               );
+
+
+
+
+
+
+              // return Container(
+              //   height: size.height * 0.10,
+              //   color: Colors.amber,
+              //   child: SearchResultItem(children: [
+              //     Text(destinations[index].city,
+              //         style: TextStyle(fontSize: size.height * 0.03)),
+              //     Text(
+              //         '${destinations[index].admin1}, ${destinations[index].country}',
+              //         style:
+              //             TextStyle(fontSize: size.height * 0.02, color: color))
+              //   ]),
+              // );
+
+
+
+
+
+
             });
       }
     }

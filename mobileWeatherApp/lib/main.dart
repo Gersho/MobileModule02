@@ -6,10 +6,28 @@ import 'package:weatherapp_proj/weather.dart';
 import 'package:geolocator/geolocator.dart';
 // import 'dart:convert';
 import 'package:weatherapp_proj/apicalls.dart';
+import 'package:provider/provider.dart';
+
+// void main() {
+//   runApp(const MyApp());
+// }
+
+
 
 void main() {
-  runApp(const MyApp());
+  runApp(
+    /// Providers are above [MyApp] instead of inside it, so that tests
+    /// can use [MyApp] while mocking the providers
+    MultiProvider(
+      providers: [
+        ChangeNotifierProvider(create: (_) => Counter()),
+      ],
+      child: const MyApp(),
+    ),
+  );
 }
+
+
 
 class MyApp extends StatelessWidget {
   const MyApp({super.key});
@@ -27,6 +45,20 @@ class WeatherApp extends StatefulWidget {
   @override
   State<WeatherApp> createState() => WeatherAppState();
 }
+
+
+class Counter with ChangeNotifier {
+  late Destination dest;
+
+  Destination get destination => dest;
+
+  void getClick(Destination val) {
+    debugPrint(val.toString());
+    notifyListeners();
+  }
+
+}
+
 
 class WeatherAppState extends State<WeatherApp> {
   bool isGeo = false;
@@ -49,6 +81,11 @@ class WeatherAppState extends State<WeatherApp> {
 
 
   
+
+
+
+
+
 
   Future<Position> _determinePosition() async {
     bool serviceEnabled;
